@@ -33,11 +33,19 @@ using namespace std;
 
 
  	while (!over){
+ 		for (int c5=0;c5<20;c5++)
+ 			cout << endl;
  		c1=19;
  		c2=1;
  		for (int c3=0;c3<19;c3++){
  			for (int c4=0;c4<19;c4++){
- 				cout << '|' << board[c4][(c3+1)*-1+19]; 
+ 				cout << '|';
+				if(board[c4][(c3+1)*-1+19]==BLK)
+					cout << 'B';
+				else if(board[c4][(c3+1)*-1+19]==WHI)
+					cout << 'W';
+				else
+					cout << " ";
 			 }
 			 cout << "|"<<endl;
 		 }
@@ -58,11 +66,11 @@ using namespace std;
 		 	board[0][2]=1;
 		 	board[2][2]=1;
 		 }*/
-		cout << "Input the X-coordinates, then Y-coordinates of where you want to place the stones\n";
+		cout << "Input the double digit X-coordinates, then Y-coordinates of where you want to place the stones\n";
 		cout << ">>";
  		getline(cin,input);
  		if (((input[0]<'0')||(input[0]>'1'))||(static_cast<int>(input[2]!=32))||(input[1]<'0')||(input[1]>'9')||(input[4]<'0')||(input[4]>'9')||
-		 ((input[3]<'0')||(input[3]>'9'))||(input.empty())) {
+		 ((input[3]<'0')||(input[3]>'1'))||(input.empty())||(input[0]=='0'&&input[1]<'1')||(input[3]=='0'&&input[4]<'1')) {
  			error=1;
  			continue;
 		 }
@@ -137,16 +145,13 @@ using namespace std;
  void shapen(int xcoord,int ycoord,int board[19][19],int temp[19][19]) {
  	const int WHI=2,BLK=1,EMP=0;
  	int ycoordo,xcoordo,routen;
- 	string route;
- 	if (route.empty()){
- 		int ycoordo=ycoord,xcoordo=xcoord;
-	 }
+ 	int route[20];
  	board[xcoord][ycoord]=1;
  	if ((board[xcoord][ycoord+1]==WHI)&&(board[xcoord][ycoord+2]!=EMP)&&(board[xcoord+1][ycoord+1]!=EMP)&&(board[xcoord-1][ycoord+1]!=EMP)){
 					temp[xcoord][ycoord+1]=1;
 					if ((board[xcoord-1][ycoord+1])&&(board[xcoord+1][ycoord+1])&&(board[xcoord][ycoord+2])) {
+						
 						shapen(xcoord,ycoord,board,temp);
-
 						shapen(xcoord,ycoord,board,temp);
 						shapen(xcoord,ycoord,board,temp);
 					}
